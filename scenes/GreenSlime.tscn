@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://c3duxwwbaanw8"]
+
+[ext_resource type="Script" uid="uid://dr6hgev6ubx6p" path="res://scripts/green_slime.gd" id="1_qwrnd"]
+[ext_resource type="Texture2D" uid="uid://bb7ajrkb2bp60" path="res://assets/brackeys_platformer_assets/sprites/slime_green.png" id="1_rx8ca"]
+[ext_resource type="PackedScene" uid="uid://djtlxja3f4enp" path="res://scenes/kill_zone.tscn" id="2_qwrnd"]
+[ext_resource type="Script" uid="uid://cq7r5xfnar25a" path="res://scenes/kill_slime.gd" id="4_tdtti"]
+[ext_resource type="AudioStream" uid="uid://mh41v7vuojg5" path="res://assets/brackeys_platformer_assets/sounds/hurt.wav" id="5_qsmut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rwj6"]
+atlas = ExtResource("1_rx8ca")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdtti"]
+atlas = ExtResource("1_rx8ca")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsmut"]
+atlas = ExtResource("1_rx8ca")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpfb6"]
+atlas = ExtResource("1_rx8ca")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_300eu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rwj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdtti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsmut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpfb6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug1lq"]
+size = Vector2(14, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwrnd"]
+size = Vector2(14, 10)
+
+[sub_resource type="Animation" id="Animation_xpfb6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../kill zone:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../kill zone/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_300eu"]
+resource_name = "kill_slime"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.43333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../kill zone:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../kill zone/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ug1lq"]
+_data = {
+&"RESET": SubResource("Animation_xpfb6"),
+&"kill_slime": SubResource("Animation_300eu")
+}
+
+[node name="Slime_green" type="Node2D" unique_id=1506672236]
+script = ExtResource("1_qwrnd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=185343906]
+sprite_frames = SubResource("SpriteFrames_300eu")
+autoplay = "default"
+frame_progress = 0.087241836
+
+[node name="kill zone" parent="." unique_id=1938871173 instance=ExtResource("2_qwrnd")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="kill zone" unique_id=1222917035]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_ug1lq")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=1033336508]
+position = Vector2(0, 5)
+target_position = Vector2(10, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=56425365]
+position = Vector2(0, 5)
+target_position = Vector2(-10, 0)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1454877788]
+position = Vector2(-2, -3)
+collision_mask = 2
+script = ExtResource("4_tdtti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1004544806]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_qwrnd")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Area2D" unique_id=271136448]
+stream = ExtResource("5_qsmut")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area2D" unique_id=737010193]
+libraries/ = SubResource("AnimationLibrary_ug1lq")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
