@@ -416,6 +416,61 @@ _data = {
 &"new_animation": SubResource("Animation_kvuet")
 }
 
+[sub_resource type="Animation" id="Animation_trtic"]
+resource_name = "Move"
+length = 4.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.29000008, 0.81, 0.9333334, 1.4566667, 1.5666667, 3.92),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(361, 5), Vector2(391, 5), Vector2(391, 21), Vector2(422, 20), Vector2(424, 37), Vector2(537, 37)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"flip_right"
+}, {
+"args": [],
+"method": &"flip_left"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rysoc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(361, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ssvqc"]
+_data = {
+&"Move": SubResource("Animation_trtic"),
+&"RESET": SubResource("Animation_rysoc")
+}
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvpfn"]
 atlas = ExtResource("4_kvpfn")
 region = Rect2(1, 0, 16, 16)
@@ -503,61 +558,6 @@ tracks/2/keys = {
 _data = {
 &"RESET": SubResource("Animation_ir15t"),
 &"Win": SubResource("Animation_ca42v")
-}
-
-[sub_resource type="Animation" id="Animation_trtic"]
-resource_name = "Move"
-length = 4.5
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.29000008, 0.81, 0.9333334, 1.4566667, 1.5666667, 3.92),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(361, 5), Vector2(391, 5), Vector2(391, 21), Vector2(422, 20), Vector2(424, 37), Vector2(537, 37)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 4.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"flip_right"
-}, {
-"args": [],
-"method": &"flip_left"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_rysoc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(361, 5)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ssvqc"]
-_data = {
-&"Move": SubResource("Animation_trtic"),
-&"RESET": SubResource("Animation_rysoc")
 }
 
 [node name="Game" type="Node2D" unique_id=820826382]
@@ -685,9 +685,6 @@ libraries/ = SubResource("AnimationLibrary_trtic")
 
 [node name="kill zones" type="Node" parent="." unique_id=1370762676]
 
-[node name="slime_green2" parent="." unique_id=961979613 instance=ExtResource("7_u5sy4")]
-position = Vector2(1224, -27)
-
 [node name="labels" type="Node" parent="." unique_id=1929831642]
 
 [node name="Label" type="Label" parent="labels" unique_id=38985435]
@@ -698,6 +695,21 @@ offset_bottom = 92.0
 theme_override_fonts/font = ExtResource("9_0tnpc")
 theme_override_font_sizes/font_size = 8
 text = "Space to jump"
+
+[node name="slimes" type="Node" parent="." unique_id=1940110581]
+
+[node name="Slime_green" parent="slimes" unique_id=1506672236 instance=ExtResource("7_u5sy4")]
+position = Vector2(361, 5)
+
+[node name="AnimatedSprite2D" parent="slimes/Slime_green" index="0" unique_id=185343906]
+script = ExtResource("14_trtic")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="slimes/Slime_green" unique_id=469654011]
+libraries/ = SubResource("AnimationLibrary_ssvqc")
+autoplay = &"Move"
+
+[node name="slime_green2" parent="slimes" unique_id=961979613 instance=ExtResource("7_u5sy4")]
+position = Vector2(1224, -27)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=750297522]
 
@@ -728,7 +740,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
 theme_override_fonts/font = ExtResource("9_0tnpc")
 theme_override_font_sizes/font_size = 32
-text = ": X"
+text = ": 0"
 metadata/_edit_use_anchors_ = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1474543235]
@@ -771,16 +783,6 @@ theme_override_fonts/font = ExtResource("9_0tnpc")
 theme_override_font_sizes/font_size = 32
 text = "YOU WIN!!"
 
-[node name="Slime_green" parent="." unique_id=1506672236 instance=ExtResource("7_u5sy4")]
-position = Vector2(361, 5)
-
-[node name="AnimatedSprite2D" parent="Slime_green" index="0" unique_id=185343906]
-script = ExtResource("14_trtic")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Slime_green" unique_id=469654011]
-libraries/ = SubResource("AnimationLibrary_ssvqc")
-autoplay = &"Move"
-
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 
-[editable path="Slime_green"]
+[editable path="slimes/Slime_green"]
